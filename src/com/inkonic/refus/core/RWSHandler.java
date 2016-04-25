@@ -14,6 +14,7 @@ import com.inkonic.refus.arch.RAuthenticatorImpl;
 import com.inkonic.refus.arch.REFUSModel;
 import com.inkonic.refus.arch.RPage;
 import com.inkonic.refus.exceptions.GenericError;
+import com.inkonic.refus.exceptions.RefusHttpException;
 import com.inkonic.refus.exceptions.RefusWebException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,7 +60,7 @@ public class RWSHandler {
                 } else if (method.isAnnotationPresent(RRedirect.class)) {
                     //System.out.println("REDIRECT FOUND");
                     redirect = method;
-                } else if(method.isAnnotationPresent(RAuthenticator.class)){
+                } else if (method.isAnnotationPresent(RAuthenticator.class)) {
                     authenticator = method;
                     authenticatorinstance = rp;
                 }
@@ -66,40 +68,55 @@ public class RWSHandler {
             }
 
         }
-        
-        if(cm.isAnnotationPresent(RSecured.class)){
-        
-            if(authenticator==null){
+
+        if (cm.isAnnotationPresent(RSecured.class)) {
+
+            if (authenticator == null) {
                 try {
-                    Method cri = RAuthenticatorImpl.class.getMethod("authenticate", HttpServletRequest.class, HttpServletResponse.class );
+                    Method cri = RAuthenticatorImpl.class.getMethod("authenticate", HttpServletRequest.class, HttpServletResponse.class);
                     authenticator = cri;
-                     authenticatorinstance = rw.getRauth();
+                    authenticatorinstance = rw.getRauth();
                 } catch (NoSuchMethodException ex) {
                     Logger.getLogger(RWSHandler.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SecurityException ex) {
                     Logger.getLogger(RWSHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        } else{
+        } else {
             authenticator = null;
         }
-        
+
         request.setAttribute("website", rw);
         System.out.println("RWEBSITE ::" + rw.getSite_name());
         request.setAttribute("page", rp);
-         Boolean execpage = true;
+        Boolean execpage = true;
         try {
-            if(authenticator!=null){
-               execpage = (Boolean) authenticator.invoke(authenticatorinstance, request, response);
+            try {
+                if (authenticator != null) {
+                    execpage = (Boolean) authenticator.invoke(authenticatorinstance, request, response);
+                }
+                if (execpage != null && execpage == true) {
+                    process.invoke(rp, request, response);
+                    redirect.invoke(rp, request, response);
+                }
+
+            } catch (InvocationTargetException re) {
+                if (re.getCause() instanceof RefusHttpException) {
+                    
+                    request.setAttribute("error_context", re.getCause());
+                    System.out.println("MESSAGE ::"+re.getCause().getMessage());
+                    RequestDispatcher view = request.getRequestDispatcher(rw.getError_page());
+                    view.forward(request, response);
+                } else {
+                    throw re;
+                }
             }
-            if(execpage!=null && execpage==true){
-            process.invoke(rp, request, response);
-            redirect.invoke(rp, request, response);
-            }
-            
-        } catch (Exception e){
-             GenericError.printException(response, e);
-        
+
+        } catch (Exception e) {
+            System.out.println("TYPE " + e.getClass().getName());
+            System.out.println("HEJEPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSE");
+            GenericError.printException(response, e);
+
         }
 
     }

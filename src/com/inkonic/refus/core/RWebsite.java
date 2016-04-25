@@ -21,6 +21,7 @@ public class RWebsite {
     protected HashMap<String, Object> site_metadata;
     protected String site_name;
     protected String site_copyright;
+    private String error_page;
     private RAuthenticatorImpl rauth;
     
     
@@ -91,6 +92,20 @@ public class RWebsite {
      */
     public void setRauth(RAuthenticatorImpl rauth) {
         this.rauth = rauth;
+    }
+
+    /**
+     * @return the error_page
+     */
+    public String getError_page() {
+        return error_page;
+    }
+
+    /**
+     * @param error_page the error_page to set
+     */
+    public void setError_page(String error_page) {
+        this.error_page = error_page;
     }
     
     
