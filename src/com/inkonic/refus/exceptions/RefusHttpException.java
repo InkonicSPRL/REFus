@@ -11,7 +11,7 @@ package com.inkonic.refus.exceptions;
  */
 public class RefusHttpException extends RuntimeException {
 
-    private int statuscode;
+    private int statuscode = 500;
     //private String message;
     private String message_key;
 
@@ -37,9 +37,10 @@ public class RefusHttpException extends RuntimeException {
         setMessage_key(msg_key);
     }
     
-    public RefusHttpException(String msg, String msg_key, Exception rootcause) {
+    public RefusHttpException(String msg, String msg_key, int statuscode, Exception rootcause) {
         super(msg, rootcause);
         setMessage_key(msg_key);
+        setStatuscode(statuscode);
         
     }
 

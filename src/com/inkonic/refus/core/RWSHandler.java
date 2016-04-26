@@ -106,6 +106,7 @@ public class RWSHandler {
                     request.setAttribute("error_context", re.getCause());
                     System.out.println("MESSAGE ::"+re.getCause().getMessage());
                     RequestDispatcher view = request.getRequestDispatcher(rw.getError_page());
+                    response.setStatus(((RefusHttpException)re.getCause()).getStatuscode());
                     view.forward(request, response);
                 } else {
                     throw re;
