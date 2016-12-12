@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author benoit.simonis
+ * @author benoit
  */
 public class RWSHandler {
 

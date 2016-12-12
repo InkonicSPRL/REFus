@@ -22,7 +22,7 @@ public interface REFUSModel {
     
     
     @RProcess
-    public String process(HttpServletRequest request, HttpServletResponse response);
+    public Object process(HttpServletRequest request, HttpServletResponse response);
     
     @RRedirect
     public String redirect(HttpServletRequest request, HttpServletResponse response);
