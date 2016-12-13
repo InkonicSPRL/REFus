@@ -5,6 +5,7 @@
  */
 package com.inkonic.refus.core;
 
+import com.inkonic.refus.annotations.RAPIEnable;
 import com.inkonic.refus.annotations.RAuthenticator;
 import com.inkonic.refus.annotations.RDelete;
 import com.inkonic.refus.annotations.RGet;
@@ -59,7 +60,7 @@ public class RAPIHandler {
         Method serialize = null;
         Object authenticatorinstance = null;
 
-        if (cm.isAnnotationPresent(RModel.class)) {
+        if (cm.isAnnotationPresent(RAPIEnable.class)) {
 
             /*          
              Pour chaque RAPIMethod, on cherche les annotations @RGet, @RPost, ...     
@@ -69,6 +70,7 @@ public class RAPIHandler {
 
                 if (method.isAnnotationPresent(RGet.class)) {
                     get = method;
+                    
                 }
                 if (method.isAnnotationPresent(RPost.class)) {
                     post = method;

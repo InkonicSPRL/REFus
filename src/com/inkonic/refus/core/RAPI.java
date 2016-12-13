@@ -5,11 +5,18 @@
  */
 package com.inkonic.refus.core;
 
+import com.inkonic.refus.annotations.RDelete;
+import com.inkonic.refus.annotations.RGet;
+import com.inkonic.refus.annotations.RModel;
+import com.inkonic.refus.annotations.RPost;
+import com.inkonic.refus.annotations.RPut;
 import com.inkonic.refus.arch.RAPIMethod;
 import com.inkonic.refus.arch.RAuthenticatorImpl;
+import com.inkonic.refus.arch.REFUSModel;
 import com.inkonic.refus.arch.RErrorImpl;
 import com.inkonic.refus.arch.RPage;
 import com.inkonic.refus.arch.RSerializeImpl;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 /**
@@ -17,34 +24,36 @@ import java.util.HashMap;
  * @author benoit.simonis
  */
 public class RAPI {
-      
+
     private HashMap<String, RAPIMethod> methods_map;
-   
+
     protected String api_name;
     protected String api_copyright;
-    private RAuthenticatorImpl rauth;
-    private RSerializeImpl rser;
-    private RErrorImpl rerr;
-    
-    
-    public RAPI(String api_name, String api_copyright){
+    private RAuthenticatorImpl rauthenticator;
+    private RSerializeImpl rserializer;
+    private RErrorImpl rerrorhandler;
+
+    public RAPI(String api_name, String api_copyright) {
         methods_map = new HashMap<>();
-      
+
         this.api_name = api_name;
         this.api_copyright = api_copyright;
     }
-    
-   
-  
-    
-    public void addRModel(String title, RAPIMethod rm){
-        
-        methods_map.put(title, rm);
-    
+
+    public HashMap<String, RAPIMethod> getMethodsMap(){
+        return methods_map;
     }
+
     
-    public RAPIMethod getModel(String title){
-    
+
+    public void addRModel(String title, RAPIMethod rm) {
+
+        methods_map.put(title, rm);
+
+    }
+
+    public RAPIMethod getModel(String title) {
+
         return methods_map.get(title);
     }
 
@@ -80,44 +89,42 @@ public class RAPI {
      * @return the rauth
      */
     public RAuthenticatorImpl getRauth() {
-        return rauth;
+        return rauthenticator;
     }
 
     /**
      * @param rauth the rauth to set
      */
-    public void setRauth(RAuthenticatorImpl rauth) {
-        this.rauth = rauth;
+    public void setRauthenticator(RAuthenticatorImpl rauth) {
+        this.rauthenticator = rauth;
     }
 
     /**
      * @return the rser
      */
     public RSerializeImpl getRser() {
-        return rser;
+        return rserializer;
     }
 
     /**
      * @param rser the rser to set
      */
-    public void setRser(RSerializeImpl rser) {
-        this.rser = rser;
+    public void setRserializer(RSerializeImpl rser) {
+        this.rserializer = rser;
     }
 
     /**
      * @return the rerr
      */
     public RErrorImpl getRerr() {
-        return rerr;
+        return rerrorhandler;
     }
 
     /**
      * @param rerr the rerr to set
      */
-    public void setRerr(RErrorImpl rerr) {
-        this.rerr = rerr;
+    public void setRerrorhandler(RErrorImpl rerr) {
+        this.rerrorhandler = rerr;
     }
 
- 
-    
 }

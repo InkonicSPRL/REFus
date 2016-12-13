@@ -6,6 +6,8 @@
 package com.inkonic.refus.tests;
 
 import com.inkonic.refus.annotations.RGet;
+import com.inkonic.refus.annotations.RParameter;
+import com.inkonic.refus.annotations.RReturns;
 import com.inkonic.refus.annotations.RSerialize;
 import com.inkonic.refus.arch.RAPIMethod;
 import com.inkonic.refus.core.RAPI;
@@ -26,8 +28,12 @@ public class MethodeTest extends RAPIMethod {
     }
 
     @Override
-    @RGet
+    @RGet(parameters = {
+        @RParameter(desc = "la description", name = "client_name", type = Integer.class),
+        @RParameter(desc = "blivli", name = "blabla", type = String.class)},
+        returns = @RReturns(desc = "La valeur de retour", type = Integer.class))
     public Object doGet(HttpServletRequest request, HttpServletResponse response) {
+
         Integer a = 2;
         a = a + 2;
         return a;
@@ -35,11 +41,18 @@ public class MethodeTest extends RAPIMethod {
 //return super.doGet(request, response); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @RSerialize
-    @Override
-    public Object serialize(HttpServletRequest request, HttpServletResponse response, Object data, RAPI rapi) {
+//    @RGet({})
+//    public Object doGfdsfdsfdet(HttpServletRequest request, HttpServletResponse response, RArguments[] arguments) {
+//
+//        Integer a = 2;
+//        a = a + 2;
+//        return a;
+//
+////return super.doGet(request, response); //To change body of generated methods, choose Tools | Templates.
+//    }
 
-        return null;
-    }
+ 
+
+   
 
 }

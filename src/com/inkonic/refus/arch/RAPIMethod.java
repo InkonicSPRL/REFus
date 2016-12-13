@@ -20,6 +20,7 @@ public abstract class RAPIMethod implements REFUSModel {
 
     /* @TODO Ajouter les variables de définition d'une méthode d'API */
 
+    
 
     public Object doGet(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet.");

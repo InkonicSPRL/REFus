@@ -47,7 +47,7 @@ public class Tests {
         
         
         
-        the_api.setRauth(new RAuthenticatorImpl() {
+        the_api.setRauthenticator(new RAuthenticatorImpl() {
 
             @Override
             public Boolean authenticate(HttpServletRequest request, HttpServletResponse response) {
@@ -55,7 +55,7 @@ public class Tests {
             }
         });
                 
-        the_api.setRser(new RSerializeImpl() {
+        the_api.setRserializer(new RSerializeImpl() {
 
             @Override
             public Object serialize(HttpServletRequest request, HttpServletResponse response, Object data) {
@@ -63,7 +63,7 @@ public class Tests {
             }
         });
         
-        the_api.setRerr(new RErrorImpl() {
+        the_api.setRerrorhandler(new RErrorImpl() {
 
             @Override
             public Object processError(HttpServletRequest request, HttpServletResponse response, Object data) {

@@ -22,5 +22,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RDelete {
-    
+    public RParameter[] parameters();
+    public RReturns returns();
+    public String description() default "";
 }

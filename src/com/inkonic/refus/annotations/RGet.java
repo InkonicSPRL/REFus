@@ -22,5 +22,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RGet {
-    
+    public RParameter[] parameters();
+    public RReturns returns();
+    public String description() default "";
 }
