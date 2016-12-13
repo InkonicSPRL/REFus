@@ -73,6 +73,7 @@ public class RDocumentation {
                 retour += getPanel(cm.getSimpleName(), getMethodHeader(cm.getAnnotation(RAPIEnable.class)) + apimethod, methods_allowed);
             }
         }
+        retour +="<center>&copy; "+rapi.api_copyright+"</center>";
         return makePage(retour);
     }
 
@@ -93,9 +94,9 @@ public class RDocumentation {
         String retour = "<div class=\"panel panel-default\">\n"
                 + "  <div class=\"panel-body\">\n"
                 + "<table width='100%' class='table' role='table'>";
-        retour += "<tr><td width='30%'>Description : </td><td>" + desc + "</td>";
-        retour += "<tr><td>Parameters: </td><td>" + listParams(params) + "</td>";
-        retour += "<tr><td>Returns: </td><td>" + dspReturn(returns) + "</td>";
+        retour += "<tr><td width='30%'>Description : </td><td>" + desc + "</td></tr>";
+        retour += "<tr><td>Parameters: </td><td>" + listParams(params) + "</td></tr>";
+        retour += "<tr><td>Returns: </td><td>" + dspReturn(returns) + "</td></tr>";
         return retour + "</table></div></div>";
 
     }
@@ -104,9 +105,9 @@ public class RDocumentation {
 
         String retour = "<table width='100%' class='table' role='table'>";
 
-        retour += "<tr><td width='30%'>Name: </td><td>" + renable.name() + "</td>";
-        retour += "<tr><td>Description : </td><td>" + renable.desc() + "</td>";
-        retour += "<tr><td>Url: </td><td><code>" + renable.url() + "</code></td>";
+        retour += "<tr><td width='30%'>Name: </td><td>" + renable.name() + "</td></tr>";
+        retour += "<tr><td>Description : </td><td>" + renable.desc() + "</td></tr>";
+        retour += "<tr><td>Url: </td><td><code>" + renable.url() + "</code></td></tr>";
         return retour + "</table>";
 
     }
@@ -132,7 +133,7 @@ public class RDocumentation {
         retour += "</head>";
         retour += "<body>";
         retour += content;
-        retour += "</body>";
+        
         return retour + "</html>";
     }
 
