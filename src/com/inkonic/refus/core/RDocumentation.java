@@ -26,7 +26,7 @@ public class RDocumentation {
         String retour = "";
 
         retour += getHeader(rapi.getSite_name() + " - Documentation");
-        retour += "<h2>Methods</h2>";
+        
 
         for (String key : rapi.getMethodsMap().keySet()) {
             Class<? extends REFUSModel> cm = (Class<? extends REFUSModel>) rapi.getMethodsMap().get(key).getClass();
